@@ -1,0 +1,9 @@
+.DS_Store
+.ruby-version.*
+*.gem
+.git/
+.idea/
+*.iml
+.bundle/*
+bin/*
+Gemfile.lock
