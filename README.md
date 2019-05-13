@@ -106,10 +106,10 @@ output {
         ...
         # Proxy settings
         proxy => {
-          host => "PROXY_ADDRESS"
-          port => PROXY_PORT
-          user => "PROXY_USER" # Optional
-          password => "PROXY_PASSWORD" # Optional
+            host => "PROXY_ADDRESS"
+            port => PROXY_PORT
+            user => "PROXY_USER" # Optional
+            password => "PROXY_PASSWORD" # Optional
         } 
     }
 }
