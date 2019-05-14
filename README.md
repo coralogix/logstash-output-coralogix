@@ -95,3 +95,22 @@ Coralogix automatically generates the timestamp based on the log arrival time. I
 ### JSON support
 
 In case your raw log message is a JSON object you should set `is_json` key to a **true** value, otherwise you can ignore it.
+
+### Proxy support
+
+This plugin supports sending data via proxy. Here is the example of the configuration:
+
+```ruby
+output {
+    coralogix {
+        ...
+        # Proxy settings
+        proxy => {
+            host => "PROXY_ADDRESS"
+            port => PROXY_PORT
+            user => "PROXY_USER" # Optional
+            password => "PROXY_PASSWORD" # Optional
+        } 
+    }
+}
+```

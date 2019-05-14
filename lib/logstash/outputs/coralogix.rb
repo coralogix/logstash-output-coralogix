@@ -17,6 +17,7 @@ class LogStash::Outputs::Coralogix < LogStash::Outputs::Base
   config :is_json, :validate => :boolean, :required => false
   config :force_compression, :validate => :boolean, :required => false, :default => false
   config :debug, :validate => :boolean, :required => false, :default => false
+  config :proxy, :validate => :hash, :required => false, :default => {}
   @configured = false
 
   public def register
@@ -63,7 +64,7 @@ class LogStash::Outputs::Coralogix < LogStash::Outputs::Base
       @loggers = {}
       #If config parameters doesn't start with $ then we can configure Coralogix logger now.
       if !config_params["APP_NAME"].start_with?("$") && !config_params["SUB_SYSTEM"].start_with?("$")
-        @logger = Coralogix::CoralogixLogger.new config_params["PRIVATE_KEY"], config_params["APP_NAME"], config_params["SUB_SYSTEM"], debug, "Logstash (#{version?})", force_compression
+        @logger = Coralogix::CoralogixLogger.new config_params["PRIVATE_KEY"], config_params["APP_NAME"], config_params["SUB_SYSTEM"], debug, "Logstash (#{version?})", force_compression, proxy
         @configured = true
       end
     rescue Exception => e
@@ -99,7 +100,7 @@ class LogStash::Outputs::Coralogix < LogStash::Outputs::Base
     app_name, sub_name = get_app_sub_name(record)
 
     if !@loggers.key?("#{app_name}.#{sub_name}")
-      @loggers["#{app_name}.#{sub_name}"] = Coralogix::CoralogixLogger.new config_params["PRIVATE_KEY"], app_name, sub_name, debug, "Logstash (#{version?})", force_compression
+      @loggers["#{app_name}.#{sub_name}"] = Coralogix::CoralogixLogger.new config_params["PRIVATE_KEY"], app_name, sub_name, debug, "Logstash (#{version?})", force_compression, proxy
     end
 
     return @loggers["#{app_name}.#{sub_name}"]
