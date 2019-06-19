@@ -31,7 +31,7 @@ class LogStash::Outputs::Coralogix < LogStash::Outputs::Base
       logger = get_logger(record)
 
       log_record = log_key_name != nil ? record.fetch(log_key_name, record) : record
-      log_record = is_json ? log_record.to_json : log_record
+      log_record = (is_json ? log_record.to_json : log_record) rescue log_record
       log_record = log_record.to_s.empty? ? record : log_record
 
       timestamp = record.fetch(timestamp_key_name, nil)
