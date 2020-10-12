@@ -95,11 +95,11 @@ class LogStash::Outputs::Coralogix < LogStash::Outputs::Base
 
   def get_logger(record)
 
-    return @logger if @configured
+    return @logger if @configured && !@logger.nil?
 
     app_name, sub_name = get_app_sub_name(record)
 
-    if !@loggers.key?("#{app_name}.#{sub_name}")
+    if !@loggers.key?("#{app_name}.#{sub_name}") || @loggers.fetch("#{app_name}.#{sub_name}", nil).nil?
       @loggers["#{app_name}.#{sub_name}"] = Coralogix::CoralogixLogger.new config_params["PRIVATE_KEY"], app_name, sub_name, debug, "Logstash (#{version?})", force_compression, proxy
     end
 

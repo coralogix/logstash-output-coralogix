@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = 'logstash-output-coralogix'
-  s.version = '1.0.3'
-  s.date = '2019-06-19'
+  s.version = '1.0.4'
+  s.date = '2020-10-12'
   s.licenses = ['Apache-2.0']
   s.summary = 'Deliver the logs to Coralogix service.'
   s.description = 'This gem is a Logstash output plugin to deliver the logs to Coralogix service.'
