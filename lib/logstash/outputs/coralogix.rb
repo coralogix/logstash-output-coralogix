@@ -3,7 +3,6 @@ require "json"
 require "date"
 require "logstash/outputs/base"
 require "logstash/namespace"
-require "centralized_ruby_logger"
 
 DEFAULT_APP_NAME = "FAILED_APP_NAME"
 DEFAULT_SUB_SYSTEM = "FAILED_SUB_SYSTEM_NAME"
@@ -17,6 +16,7 @@ class LogStash::Outputs::Coralogix < LogStash::Outputs::Base
   config :is_json, :validate => :boolean, :required => false
   config :force_compression, :validate => :boolean, :required => false, :default => false
   config :debug, :validate => :boolean, :required => false, :default => false
+  config :endpoint, :validate => :string, :required => false, :default => nil
   config :proxy, :validate => :hash, :required => false, :default => {}
   @configured = false
 
@@ -62,6 +62,15 @@ class LogStash::Outputs::Coralogix < LogStash::Outputs::Base
   def configure
     begin
       @loggers = {}
+
+      # Overwrite Coralogix endpoint
+      unless endpoint.nil?
+        ENV["CORALOGIX_LOG_URL"] = "https://#{endpoint}/api/v1/logs"
+        ENV["CORALOGIX_TIME_DELTA_URL"] = "https://#{endpoint}/sdk/v1/time"
+      end
+
+      require "centralized_ruby_logger"
+
       #If config parameters doesn't start with $ then we can configure Coralogix logger now.
       if !config_params["APP_NAME"].start_with?("$") && !config_params["SUB_SYSTEM"].start_with?("$")
         @logger = Coralogix::CoralogixLogger.new config_params["PRIVATE_KEY"], config_params["APP_NAME"], config_params["SUB_SYSTEM"], debug, "Logstash (#{version?})", force_compression, proxy
