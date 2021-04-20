@@ -13,6 +13,8 @@ class LogStash::Outputs::Coralogix < LogStash::Outputs::Base
   config :config_params, :validate => :hash, :required => true
   config :timestamp_key_name, :validate => :string, :required => false
   config :log_key_name, :validate => :string, :required => false
+  config :severity_key_name, :validate => :string, :required => false
+  config :category_key_name, :validate => :string, :required => false
   config :is_json, :validate => :boolean, :required => false
   config :force_compression, :validate => :boolean, :required => false, :default => false
   config :debug, :validate => :boolean, :required => false, :default => false
@@ -35,19 +37,39 @@ class LogStash::Outputs::Coralogix < LogStash::Outputs::Base
       log_record = log_record.to_s.empty? ? record : log_record
 
       timestamp = record.fetch(timestamp_key_name, nil)
+      severity = record.fetch(severity_key_name, nil)
+      category = record.fetch(category_key_name, nil)
+
       if (timestamp.nil?)
-        logger.debug log_record
+        log logger, severity, category, log_record
       else
         begin
           float_timestamp = DateTime.parse(timestamp.to_s).to_time.to_f * 1000
-          logger.debug log_record, nil, timestamp: float_timestamp
+          log logger, severity, category, log_record, timestamp: float_timestamp
         rescue Exception => e
-          logger.debug log_record
+          log logger, severity, category, log_record
         end
       end
     end
 
     return 1
+  end
+
+  def log(logger, severity, category, log_record, timestamp = {})
+    case severity
+    when "critical"
+      logger.critical log_record, category, timestamp
+    when "error"
+      logger.error log_record, category, timestamp
+    when "warning"
+      logger.warning log_record, category, timestamp
+    when "info"
+      logger.info log_record, category, timestamp
+    when "verbose"
+      logger.verbose log_record, category, timestamp
+    else
+      logger.debug log_record, category, timestamp
+    end
   end
 
   def version?

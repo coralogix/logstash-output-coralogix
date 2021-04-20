@@ -1,6 +1,6 @@
 # encoding: utf-8
 require "logstash/devutils/rspec/spec_helper"
-require "logstash/outputs/coralogix_logger"
+require "logstash/outputs/coralogix"
 require "logstash/codecs/plain"
 require "logstash/event"
 
