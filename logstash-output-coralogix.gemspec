@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = 'logstash-output-coralogix'
-  s.version = '1.0.5'
-  s.date = '2021-02-09'
+  s.version = '1.0.6'
+  s.date = '2021-10-24'
   s.licenses = ['Apache-2.0']
   s.summary = 'Deliver the logs to Coralogix service.'
   s.description = 'This gem is a Logstash output plugin to deliver the logs to Coralogix service.'
@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   # Gem dependencies
   s.add_runtime_dependency 'logstash-core-plugin-api', '~> 2.0'
   s.add_runtime_dependency 'logstash-codec-plain'
-  s.add_runtime_dependency 'centralized_ruby_logger', '>= 0.0.15'
+  s.add_runtime_dependency 'centralized_ruby_logger', '>= 0.0.18'
 
   s.add_development_dependency 'logstash-devutils'
 end
