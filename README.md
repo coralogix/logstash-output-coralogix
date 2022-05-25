@@ -1,5 +1,9 @@
 # Logstash Coralogix Output Plugin
 
+## This repository is deprecated and will no longer be supported by coralogix.
+## If you are still using our plugin for som reason please contact support to convet to the [generic HTTP output solution](https://coralogix.com/docs/coralogix-logstash-integration/).
+
+
 [![gem](https://img.shields.io/gem/v/logstash-output-coralogix.svg?logo=ruby&logoColor=red&style=flat)](https://rubygems.org/gems/logstash-output-coralogix/)
 [![gem downloads](https://img.shields.io/gem/dt/logstash-output-coralogix.svg?style=flat)](https://rubygems.org/gems/logstash-output-coralogix/)
 [![Github license](https://img.shields.io/github/license/coralogix/logstash-output-coralogix.svg?logo=github&style=flat)](https://github.com/coralogix/logstash-output-coralogix/blob/master/LICENSE)
