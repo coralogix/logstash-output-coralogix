@@ -58,6 +58,8 @@ output {
         }
         log_key_name => "message"
         timestamp_key_name => "@timestamp"
+        severity_key_name => "severity"
+        category_key_name => "category"
         is_json => true
     }
 }
@@ -95,6 +97,15 @@ If you want to send the entire message then you can just delete this key.
 Coralogix automatically generates the timestamp based on the log arrival time. If you rather use your own timestamp, use the `timestamp_key_name` to specify your timestamp field, and it will be read from your log.
 
 **Note:** We accepts only logs which are not older than `24 hours`.
+
+### Category
+
+This plugin puts everything in the category `CORALOGIX`. If you want to take control over which category is to be used, use the `category_key_name` to specify your category field.
+
+### Severity
+
+By default everything is sent as severity `DEBUG`. You can use a value in the incoming log entry to dictate which severity is to be used, use the `severity_key_name`. The valid log levels are:
+ `debug`, `verbose`, `info`, `warning`, `error`, `critical`. Values other than this ends up as debug
 
 ### JSON support
 
